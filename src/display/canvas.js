@@ -956,7 +956,11 @@ var CanvasGraphics = (function CanvasGraphicsClosure() {
             break;
           case 'ca':
             this.current.fillAlpha = state[1];
-            this.ctx.globalAlpha = state[1];
+            //Bugfix - See https://github.com/mozilla/pdf.js/issues/5264
+            var ie = navigator.userAgent.indexOf('MSIE') !== -1 || navigator.appVersion.indexOf('Trident/') > 0;
+            if(!ie){
+              this.ctx.globalAlpha = state[1];
+            }
             break;
           case 'BM':
             if (value && value.name && (value.name !== 'Normal')) {
@@ -1949,6 +1953,11 @@ var CanvasGraphics = (function CanvasGraphicsClosure() {
       if (isArray(rect) && rect.length === 4) {
         var width = rect[2] - rect[0];
         var height = rect[3] - rect[1];
+        //Bugfix see https://github.com/mozilla/pdf.js/issues/5264
+        var ie = navigator.userAgent.indexOf('MSIE') !== -1 || navigator.appVersion.indexOf('Trident/') > 0;
+        if (ie) {
+          this.ctx.globalAlpha = 0.5;
+        }
         this.ctx.rect(rect[0], rect[1], width, height);
         this.clip();
         this.endPath();
