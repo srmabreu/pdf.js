@@ -398,11 +398,10 @@ var JpxImage = (function JpxImageClosure() {
               length = readUint16(data, position);
               // skipping content
               break;
-            case 0xFF53: // Coding style component (COC)
-              throw new Error('Codestream code 0xFF53 (COC) is ' +
-                              'not implemented');
+            case 0xFF53: // Coding style component (COC) Bug: https://github.com/OHIF/image-JPEG2000/issues/8 -- Fix: Ignore error
+              console.log('Codestream code 0xFF53 (COC) is not implemented');
             default:
-              throw new Error('Unknown codestream code: ' + code.toString(16));
+              console.log('Unknown codestream code: ' + code.toString(16))
           }
           position += length;
         }
