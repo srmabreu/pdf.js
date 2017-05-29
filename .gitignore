@@ -6,3 +6,7 @@ tags
 Makefile
 node_modules/
 examples/node/svgdump/
+.idea
+node/
+pdf.js-deploy/
+*.iml
